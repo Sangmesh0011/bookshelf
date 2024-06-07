@@ -1,0 +1,94 @@
+import { useState, useEffect } from "react";
+import Book from "./Book.jsx";
+import ClipLoader from "react-spinners/ClipLoader";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+function Home() {
+  const [books, setBooks] = useState([]);
+  const [searchedValue, setSearchedValue] = useState("");
+  const [loading, SetLoading] = useState(true);
+
+  console.log(searchedValue);
+
+  useEffect(() => {
+    SetLoading(true);
+    fetch(
+      `https://openlibrary.org/search.json?q=${searchedValue}&limit=10&page=1`
+    )
+      .then((dataRes) => {
+        return dataRes.json();
+      })
+      .then((data) => {
+        let actualBooks = data.docs;
+        setBooks(actualBooks);
+        SetLoading(false);
+        console.log(books);
+      });
+  }, [searchedValue]);
+
+  function handleLocalAdd(id, title, author, edition) {
+    localStorage.setItem(id, JSON.stringify([title, author, edition]));
+  }
+
+  return (
+    <div className="w-full flex flex-col justify-center align-middle">
+      {/* header */}
+      <ToastContainer />
+      <div className="flex justify-evenly w-[100%] h-16 p-2 px-6 mt-8 mb-8">
+        <input
+          type="text"
+          placeholder="Search for books"
+          value={searchedValue}
+          onChange={(e) => setSearchedValue(e.target.value)}
+          className="w-2/6 p-3 border-2"
+        />
+        <Link
+          to="/shelf"
+          className="px-6 bg-cyan-500 text-white hover:bg-cyan-300 flex justify-center hover:text-black text-center items-center"
+        >
+          Bookshelf
+        </Link>
+      </div>
+
+      {
+        // Actual Searching in data unless api searching done here
+        /* .filter((book)=>{
+          return searchedValue.toLowerCase()===''?book:book.title.toLowerCase().includes(searchedValue)
+        }) */
+      }
+
+      {/* Loader */}
+      <div className="w-full flex flex-col justify-center items-center">
+        <ClipLoader
+          color={"#65aab1"}
+          loading={loading}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+        {books.length === 0 ? (
+          <p>Please search for books from the search bar</p>
+        ) : null}
+      </div>
+
+      {/* Main Container for books */}
+      <div className="h-full w-full gap-10 px-24 ml-24 py-6 flex flex-wrap">
+        {books.map((book, index) => (
+          <Book
+            key={book.cover_i}
+            id={book.cover_i}
+            title={book.title}
+            author={book.author_name}
+            edition={book.edition_count}
+            inShelf={false}
+            onAdd={handleLocalAdd}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Home;
