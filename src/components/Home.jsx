@@ -75,7 +75,7 @@ function Home() {
       </div>
 
       {/* Main Container for books */}
-      <div className="h-full w-full gap-10 px-24 ml-24 py-6 flex flex-wrap">
+      <div className="h-full w-full gap-4 md:gap-10 px-2 md:px-24 ml-24 py-6 flex flex-wrap">
         {books.map((book, index) => (
           <Book
             key={book.cover_i}
