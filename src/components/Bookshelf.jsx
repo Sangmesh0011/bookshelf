@@ -23,7 +23,7 @@ const Bookshelf = ({ title, edition }) => {
     <div className="flex flex-col justify-center items-center">
       <h1 className="text-4xl mt-12">MY BOOKSHELF</h1>
       <Link to={"/"}>Back To Home</Link>
-      <div className="h-full w-full gap-10 px-24 ml-24 py-6 flex flex-wrap">
+      <div className="h-full w-[100vw] gap-1 md:gap-10 px-2 md:px-24 py-6 flex justify-center items-center flex-wrap">
         {shelfBooks.map((book) => (
           <Book
             key={book.key}
