@@ -14,18 +14,21 @@ function Home() {
 
   useEffect(() => {
     SetLoading(true);
-    fetch(
-      `https://openlibrary.org/search.json?q=${searchedValue}&limit=10&page=1`
-    )
-      .then((dataRes) => {
-        return dataRes.json();
-      })
-      .then((data) => {
-        let actualBooks = data.docs;
-        setBooks(actualBooks);
-        SetLoading(false);
-        console.log(books);
-      });
+    const fetchData=async()=>{
+      await fetch(
+        `https://openlibrary.org/search.json?q=${searchedValue}&limit=10&page=1`
+      )
+        .then((dataRes) => {
+          return dataRes.json();
+        })
+        .then((data) => {
+          let actualBooks = data.docs;
+          setBooks(actualBooks);
+          SetLoading(false);
+          console.log(books);
+        });
+    }
+    fetchData()
   }, [searchedValue]);
 
   function handleLocalAdd(id, title, author, edition) {
@@ -37,7 +40,7 @@ function Home() {
     <div className="w-full flex flex-col justify-center align-middle">
       {/* header */}
       <ToastContainer />
-      <div className="flex flex-col md:flex-row justify-evenly w-[100%] h-16 p-2 px-6 mt-8 mb-8">
+      <div className="flex flex-col md:flex-row justify-evenly w-[100%] h-36 md:h-16 p-2 px-6 mt-8 mb-8">
         <input
           type="text"
           placeholder="Search for books"
@@ -47,7 +50,7 @@ function Home() {
         />
         <Link
           to="/shelf"
-          className="md:px-6 mt-6 md:mt-0 bg-cyan-500 text-white hover:bg-cyan-300 flex justify-center hover:text-black text-center items-center"
+          className="h-16 md:h-auto md:px-6 mt-6 md:mt-0 bg-cyan-500 text-white hover:bg-cyan-300 flex justify-center hover:text-black text-center items-center"
         >
           Bookshelf
         </Link>
