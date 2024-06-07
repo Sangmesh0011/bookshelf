@@ -30,6 +30,7 @@ function Home() {
 
   function handleLocalAdd(id, title, author, edition) {
     localStorage.setItem(id, JSON.stringify([title, author, edition]));
+    toast("BOOK ADDED TO BOOKSHELF!")
   }
 
   return (
