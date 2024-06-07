@@ -37,17 +37,17 @@ function Home() {
     <div className="w-full flex flex-col justify-center align-middle">
       {/* header */}
       <ToastContainer />
-      <div className="flex justify-evenly w-[100%] h-16 p-2 px-6 mt-8 mb-8">
+      <div className="flex flex-col md:flex-row justify-evenly w-[100%] h-16 p-2 px-6 mt-8 mb-8">
         <input
           type="text"
           placeholder="Search for books"
           value={searchedValue}
           onChange={(e) => setSearchedValue(e.target.value)}
-          className="w-2/6 p-3 border-2"
+          className="w-full md:w-2/6 p-3 border-2"
         />
         <Link
           to="/shelf"
-          className="px-6 bg-cyan-500 text-white hover:bg-cyan-300 flex justify-center hover:text-black text-center items-center"
+          className="md:px-6 mt-6 md:mt-0 bg-cyan-500 text-white hover:bg-cyan-300 flex justify-center hover:text-black text-center items-center"
         >
           Bookshelf
         </Link>
@@ -75,7 +75,7 @@ function Home() {
       </div>
 
       {/* Main Container for books */}
-      <div className="h-full w-full gap-4 md:gap-10 px-2 md:px-24 ml-24 py-6 flex flex-wrap">
+      <div className="h-full w-[100vw] gap-1 md:gap-10 px-2 md:px-24 py-6 flex justify-center items-center flex-wrap">
         {books.map((book, index) => (
           <Book
             key={book.cover_i}
